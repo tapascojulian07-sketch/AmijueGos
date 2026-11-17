@@ -399,3 +399,52 @@ button:not(.menu button):not(#ingreso):not(.contenedor button):hover {
     background-color: #8fd63a;
     transform: scale(1.05);
 }
+
+/* ==========================================
+   TEMAS (CLARO / OSCURO) Y TAMAÑOS DE FUENTE
+   ========================================== */
+
+/* Tema Claro */
+body.tema-claro {
+    background: linear-gradient(135deg, #e0e5ec, #f4f6f9) !important;
+    color: #1e1e2f !important;
+}
+
+body.tema-claro .contenedor,
+body.tema-claro .options-container,
+body.tema-claro .juego {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    color: #1e1e2f !important;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.tema-claro h1,
+body.tema-claro label,
+body.tema-claro footer {
+    color: #1e1e2f !important;
+}
+
+body.tema-claro .juego h2 {
+    color: #4a7514 !important;
+}
+
+/* Tamaños de Fuente */
+body.fuente-pequena {
+    font-size: 13px !important;
+}
+body.fuente-pequena h1 { font-size: 20px !important; }
+body.fuente-pequena label,
+body.fuente-pequena p,
+body.fuente-pequena button { font-size: 12px !important; }
+
+body.fuente-mediana {
+    font-size: 16px !important;
+}
+
+body.fuente-grande {
+    font-size: 20px !important;
+}
+body.fuente-grande h1 { font-size: 32px !important; }
+body.fuente-grande label,
+body.fuente-grande p,
+body.fuente-grande button { font-size: 18px !important; }
