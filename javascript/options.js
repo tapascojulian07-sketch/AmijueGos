@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 await signOut(auth);
                 alert("Sesión cerrada correctamente.");
                 // Redirige al menú principal (login)
-                window.location.href = "index.html";
+                window.location.href = "../index.html";
             } catch (error) {
                 alert("Error al cerrar sesión: " + error.message);
             }
