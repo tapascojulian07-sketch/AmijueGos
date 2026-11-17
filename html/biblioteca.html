@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 y establece el idioma español -->
+<html lang="es">
+<!-- Sección de metadatos, configuración y enlaces a recursos externos -->
+<head>
+    <!-- Establece la codificación de caracteres a UTF-8 para admitir tildes y caracteres especiales -->
+    <meta charset="UTF-8">
+    <!-- Configura la escala y el diseño adaptable (responsive) para dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define el título de la pestaña del navegador para la sección de la biblioteca -->
+    <title>Amijuegos - Biblioteca</title>
+    <!-- Vincula la hoja de estilos CSS externa compartida -->
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<!-- Cuerpo principal de la página -->
+<body>
+    <!-- Contenedor principal de la interfaz con clase de ocultamiento inicial -->
+    <div class="oculto" id="oculto">
+        <!-- Encabezado superior con el logotipo institucional y acceso a opciones -->
+        <header>
+            <!-- Logotipo de la plataforma -->
+            <img src="../imagenes/image_1_1776972191434-removebg-preview.png" alt="logo" class="logo">
+            <!-- Botón de menú desplegable o de tres puntos que redirige a la vista de opciones -->
+            <button type="button" class="options" onclick="window.location.href='Options.html'">⁝</button>
+        </header>
+        <!-- Sección principal de contenido de la biblioteca -->
+        <main>
+            <!-- Barra de navegación superior para moverse entre las vistas de la aplicación -->
+            <nav class="menu">
+                <button onclick="window.location.href='../index.html'">Tienda</button>
+                <button onclick="window.location.href='biblioteca.html'">Biblioteca</button>
+                <button onclick="window.location.href='ofertas.html'">Ofertas</button>
+                <!-- Botón de acceso al panel de administración (oculto por defecto según los permisos del usuario) -->
+                <button id="btn-admin" onclick="window.location.href='../admin/admin.html'" style="display: none; background-color: #d9534f; color: white;">Panel Admin</button>
+            </nav>
+
+            <!-- Contenedor centrado que muestra el título y la lista de juegos adquiridos -->
+            <div style="text-align: center; padding: 40px;">
+                <h2>Mi Biblioteca</h2>
+                <!-- Lista desordenada que el script de JavaScript poblará dinámicamente con los juegos del usuario -->
+                <ul id="lista-biblioteca-juegos" class="lista-juegos">
+                    <!-- Se llena con script -->
+                </ul>
+            </div>
+        </main>
+    </div>
+    <!-- Script modular específico para gestionar la lógica y renderizado de la biblioteca de juegos -->
+    <script type="module" src="../javascript/biblioteca.js"></script>
+</body>
+</html>

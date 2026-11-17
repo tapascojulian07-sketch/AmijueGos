@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 y establece el idioma español -->
+<html lang="es">
+<!-- Sección de metadatos, configuración y enlaces a recursos externos -->
+<head>
+    <!-- Establece la codificación de caracteres a UTF-8 para admitir tildes y caracteres especiales -->
+    <meta charset="UTF-8">
+    <!-- Configura la escala y el diseño adaptable (responsive) para dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define el título de la pestaña del navegador para la página de opciones -->
+    <title>Options</title>
+    <!-- Vincula la hoja de estilos CSS externa compartida -->
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<!-- Cuerpo principal de la página -->
+<body>
+    <!-- Encabezado superior que contiene únicamente el botón para retroceder a la página principal -->
+    <header>
+        <!-- Botón de retorno que redirige al usuario a la vista de la tienda (index.html) -->
+        <button type="button" class="backButton" onclick="window.location.href='../index.html'">↩</button>
+    </header>
+
+    <!-- Contenedor de sección para la configuración de la cuenta de usuario -->
+    <div class="options-container">
+        <h1>configuracion de la cuenta</h1>
+        <!-- Etiqueta y campo de entrada para editar el nombre de usuario -->
+        <label for="cambio-user">Editaar usuario:</label>
+        <input type="text" id="username-input" placeholder="Ingrese su nombre de usuario">
+        
+        <!-- Etiqueta y campo de contraseña para actualizar la clave de acceso -->
+        <label for="cambio-contraseña">Cambiar contraseña:</label>
+        <input type="password" id="cambio-contraseña" placeholder="Ingrese su nueva contraseña">
+        
+        <!-- Botón para guardar los cambios realizados en la cuenta -->
+        <button id="save-account-button">Guardar cambios</button>
+    </div>
+
+    <!-- Contenedor de sección para los ajustes visuales y de apariencia -->
+    <div class="options-container">
+        <h1>Ajustes de apariencia</h1> 
+        <!-- Selector para alternar entre el tema claro y oscuro -->
+        <label for="theme-select">Tema:</label>
+        <select id="theme-select">
+            <option value="light">Claro</option>
+            <option value="dark">Oscuro</option>
+        </select>
+
+        <!-- Selector para configurar el tamaño de la fuente en la interfaz -->
+        <label for="font-size-select">Tamaño de fuente:</label>
+        <select id="font-size-select">
+            <option value="small">Pequeño</option>
+            <option value="medium" selected>Mediano</option>
+            <option value="large">Grande</option>
+        </select>
+
+        <!-- Botón para guardar las preferencias de apariencia -->
+        <button id="save-button">Guardar cambios</button>
+    </div>
+
+    <!-- Bloque para la gestión de la sesión del usuario -->
+    <div class="options-container">
+        <h1>Sesión</h1>
+        <!-- Botón de alerta o peligro para cerrar la sesión actual de la plataforma -->
+        <button type="button" id="btn-cerrar-sesion" class="btn-danger">Cerrar Sesión</button>
+    </div>
+
+    <!-- Script de opciones modularizado para controlar la lógica de guardado y preferencias -->
+    <script type="module" src="../javascript/options.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 -->
+<html lang="es">
+<!-- Sección de metadatos, configuración y enlaces a recursos externos -->
+<head>
+    <!-- Establece la codificación de caracteres a UTF-8 para soportar tildes y caracteres especiales -->
+    <meta charset="UTF-8">
+    <!-- Configura la vista adaptable (responsive) para dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define el título que aparece en la pestaña del navegador -->
+    <title>Amijuegos</title>
+    <!-- Vincula la hoja de estilos CSS externa -->
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<!-- Cuerpo principal del documento donde va todo el contenido visible -->
+<body>
+    <!-- Contenedor principal que agrupa los formularios de autenticación -->
+    <div>
+        <!-- 1. MENÚ DE INICIO DE SESIÓN -->
+        <!-- Contenedor del formulario para usuarios ya registrados -->
+        <div class="contenedor" id="contenedor">
+            <h1>Registro de Datos</h1> <br>
+            <!-- Campo de entrada para el correo o nombre de usuario -->
+            <label>CORREO / USUARIO:</label> <br>
+            <input type="text" id="nombre"> <br>
+            <!-- Campo de entrada oculto para la contraseña -->
+            <label>CONTRASEÑA:</label> <br>
+            <input type="password" id="clave"> <br>
+            <!-- Botón que dispara la función login() en JavaScript -->
+            <button id="ingreso" onclick="login()">Ingresar</button> <br><br>
+            
+            <!-- Botón que alterna la vista hacia el formulario de registro de nuevos usuarios -->
+            <button type="button" id="btn-crear-cuenta" class="btn-crear-cuenta" onclick="mostrarFormularioRegistro()">Crear una cuenta</button>
+        </div>
+
+        <!-- 2. MENÚ DE CREAR CUENTA (Oculto inicialmente mediante display: none) -->
+        <!-- Contenedor del formulario para el registro de nuevos usuarios -->
+        <div class="contenedor" id="contenedor-registro" style="display: none;">
+            <h1>Crear Cuenta</h1> <br>
+            <!-- Campo para elegir el nombre de usuario -->
+            <label>NOMBRE DE USUARIO:</label> <br>
+            <input type="text" id="reg-nombre"> <br>
+            <!-- Campo con validación básica para el correo electrónico -->
+            <label>CORREO ELECTRÓNICO:</label> <br>
+            <input type="email" id="reg-correo"> <br>
+            <!-- Campo para crear la contraseña -->
+            <label>CONTRASEÑA:</label> <br>
+            <input type="password" id="reg-clave"> <br>
+            <!-- Selector desplegable para elegir el tema visual de la interfaz -->
+            <label>TEMA PREFERIDO:</label> <br>
+            <select id="reg-tema">
+                <option value="dark" selected>Oscuro (Dark)</option>
+                <option value="light">Claro (Light)</option>
+            </select> <br><br>
+
+            <!-- Botón que envía los datos a la función registrarUsuario() -->
+            <button type="button" onclick="registrarUsuario()">Registrarme</button> <br><br>
+            <!-- Botón para regresar al formulario de inicio de sesión -->
+            <button type="button" onclick="mostrarFormularioLogin()">Volver a Iniciar Sesión</button>
+        </div>
+    </div>
+
+    <!-- 3. INTERFAZ PRINCIPAL DE LA APLICACIÓN (Oculta hasta que el usuario inicie sesión) -->
+    <div class="oculto" id="oculto">
+        <!-- Encabezado superior con el logotipo y acceso a opciones -->
+        <header>
+            <!-- Imagen del logotipo de la plataforma -->
+            <img src="imagenes/image_1_1776972191434-removebg-preview.png" alt="logo" class="logo">
+            <!-- Botón de menú de tres puntos que redirige a la página de opciones -->
+            <button type="button" class="options" onclick="window.location.href='html/Options.html'">
+                ⁝
+            </button>
+        </header>
+        <!-- Contenido principal de la tienda -->
+        <main>
+            <!-- Barra de navegación principal entre las vistas de la plataforma -->
+            <nav class="menu">
+                <button onclick="window.location.href='index.html'">Tienda</button>
+                <button onclick="window.location.href='html/biblioteca.html'">Biblioteca</button>
+                <button onclick="window.location.href='html/ofertas.html'">Ofertas</button>
+                <!-- Botón de administración oculto por defecto; se muestra solo si el usuario tiene rol de administrador -->
+                <button id="btn-admin" onclick="window.location.href='admin/admin.html'" style="display: none; background-color: #d9534f; color: white;">Panel Admin</button>
+            </nav>
+            </nav> 
+
+            <!-- Contenedor dinámico donde JavaScript renderizará el catálogo de videojuegos -->
+            <div id="contenido">
+            </div>
+            
+            <!-- 4. VISTA DE DETALLES DEL JUEGO (Oculta hasta seleccionar un título del catálogo) -->
+            <div id="detalles-juego" style="display: none; max-width: 600px; margin: 20px auto; background: rgba(0,0,0,0.3); padding: 25px; border-radius: 12px; color: white; text-align: center;">
+                <!-- Botón para cerrar los detalles y volver a mostrar el catálogo principal -->
+                <button onclick="document.getElementById('detalles-juego').style.display='none'; document.getElementById('contenido').style.display='block';" style="padding: 8px 15px; background: #d9534f; color: white; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 15px;">← Volver a la Tienda</button>
+                
+                <!-- Elementos vacíos que se rellenan dinámicamente con la información del juego seleccionado -->
+                <h2 id="detalle-nombre" style="margin-top: 10px;"></h2>
+                <img id="detalle-imagen" src="" alt="Imagen del juego" style="max-width: 100%; height: auto; border-radius: 8px; margin: 15px 0;">
+                <p id="detalle-descripcion" style="font-size: 16px; margin-bottom: 15px;"></p>
+                <p id="detalle-precio" style="font-size: 18px; font-weight: bold; color: #5cb85c; margin-bottom: 20px;"></p>
+                <!-- Botón que captura los datos visibles del juego actual y ejecuta la función de compra -->
+                <button onclick="comprarJuegoActual(
+                        document.getElementById('detalle-nombre').textContent,
+                        document.getElementById('detalle-descripcion').textContent,
+                        document.getElementById('detalle-imagen').src,
+                        document.getElementById('detalle-precio').textContent
+                )" style="padding: 10px 25px; background: #5cb85c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Confirmar Compra</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- 5. PIE DE PÁGINA -->
+    <!-- Muestra los créditos de los desarrolladores y los derechos de autor -->
+    <footer>
+        desarrollado por:<br>
+        @wtf_minus<br>
+        @T4po_0 <br>
+        ©2026 AmiJueGos | TODOS LOS DERECHOS RESERVADOS
+    </footer>
+
+    <!-- 6. SCRIPTS -->
+    <!-- Importa el archivo principal de JavaScript como módulo ES6 (permite usar import/export, por ejemplo para Firebase) -->
+    <script type="module" src="javascript/script.js"></script>
+</body>
+</html>

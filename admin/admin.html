@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- Define el tipo de documento como HTML5 y establece el idioma español -->
+<html lang="es">
+<!-- Sección de metadatos, configuración y enlaces a recursos externos -->
+<head>
+    <!-- Establece la codificación de caracteres a UTF-8 para admitir tildes y caracteres especiales -->
+    <meta charset="UTF-8">
+    <!-- Configura la escala y el diseño adaptable (responsive) para dispositivos móviles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Define el título de la pestaña del navegador para el panel de administración -->
+    <title>Amijuegos - Panel Admin</title>
+    <!-- Vincula la hoja de estilos CSS externa compartida -->
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<!-- Cuerpo principal de la página -->
+<body>
+    <!-- Contenedor principal de la interfaz con clase de ocultamiento inicial -->
+    <div class="oculto" id="oculto">
+        <!-- Encabezado superior con el logotipo institucional y acceso a opciones -->
+        <header>
+            <!-- Logotipo de la plataforma -->
+            <img src="../imagenes/image_1_1776972191434-removebg-preview.png" alt="logo" class="logo">
+            <!-- Botón de menú desplegable o de tres puntos que redirige a la vista de opciones -->
+            <button type="button" class="options" onclick="window.location.href='Options.html'">⁝</button>
+        </header>
+        <!-- Sección principal del panel de control -->
+        <main>
+            <!-- Barra de navegación superior adaptada con estilos en línea para el panel de administración -->
+            <nav class="menu" style="display: flex; gap: 10px; justify-content: center; background: none; padding: 10px;">
+                <button onclick="window.location.href='../index.html'" style="width: auto; height: auto; padding: 10px 20px;">Tienda</button>
+                <button onclick="window.location.href='../html/biblioteca.html'" style="width: auto; height: auto; padding: 10px 20px;">Biblioteca</button>
+                <button onclick="window.location.href='../html/ofertas.html'" style="width: auto; height: auto; padding: 10px 20px;">Ofertas</button>
+                <!-- Botón de acceso al panel de administración (visible aquí para administradores autenticados) -->
+                <button id="btn-admin" onclick="window.location.href='admin.html'" style="display: none; width: auto; height: auto; padding: 10px 20px; background-color: #d9534f; color: white;">Panel Admin</button>
+            </nav>
+
+            <!-- Contenedor principal centrado para la gestión del catálogo de videojuegos -->
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2>Panel de Administración - Gestión de Juegos</h2>
+                
+                <!-- Formulario interactivo para agregar o editar juegos en la base de datos -->
+                <div style="background: rgba(0,0,0,0.4); padding: 25px; border-radius: 12px; margin-bottom: 25px; color: white;">
+                    <!-- Título dinámico del formulario (cambia según si se crea o edita un juego) -->
+                    <h3 id="form-titulo" style="margin-top: 0;">Agregar Nuevo Juego</h3>
+                    <!-- Campo oculto para almacenar el ID del juego al momento de editarlo -->
+                    <input type="hidden" id="admin-juego-id">
+                    
+                    <!-- Campo de entrada para el nombre o título del videojuego -->
+                    <label>Nombre del Juego:</label><br>
+                    <input type="text" id="admin-nombre" style="width: 100%; padding: 8px; margin: 5px 0 15px 0; background: #2a2a3c; border: 1px solid #444; color: white; border-radius: 4px;"><br>
+                    
+                    <!-- Área de texto para la descripción detallada del videojuego -->
+                    <label>Descripción:</label><br>
+                    <textarea id="admin-descripcion" style="width: 100%; padding: 8px; margin: 5px 0 15px 0; background: #2a2a3c; border: 1px solid #444; color: white; border-radius: 4px; height: 80px;"></textarea><br>
+                    
+                    <!-- Campo de texto para fijar el precio en dólares (USD) -->
+                    <label>Precio (COPs):</label><br>
+                    <input type="text" id="admin-precio" value="19.99" style="width: 100%; padding: 8px; margin: 5px 0 15px 0; background: #2a2a3c; border: 1px solid #444; color: white; border-radius: 4px;"><br>
+                    
+                    <!-- Campo para enlazar la URL de la imagen alojada en la nube -->
+                    <label>URL de la Imagen (Enlace web de la nube):</label><br>
+                    <input type="text" id="admin-imagen" placeholder="https://ejemplo.com/imagen.png" style="width: 100%; padding: 8px; margin: 5px 0 15px 0; background: #2a2a3c; border: 1px solid #444; color: white; border-radius: 4px;"><br>
+                    
+                    <!-- Casilla de verificación (checkbox) para marcar si el juego se encuentra en oferta -->
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input type="checkbox" id="admin-oferta" style="width: 18px; height: 18px;"> ¿Poner en Oferta?
+                    </label><br>
+
+                    <!-- Botón para ejecutar la función de guardado/actualización del juego en el backend -->
+                    <button type="button" onclick="guardarJuegoAdmin()" style="padding: 10px 20px; background: #5cb85c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Guardar Juego</button>
+                </div>
+
+                <!-- Sección de listado de registros actuales del sistema -->
+                <h3>Juegos Existentes</h3>
+                <!-- Lista desordenada que JavaScript rellena dinámicamente con los juegos cargados para su administración -->
+                <ul id="admin-lista-juegos" class="lista-juegos">
+                    <!-- Se cargan con JS -->
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script modular específico para administrar la lógica del panel de control -->
+    <script type="module" src="admin.js"></script>
+</body>
+</html>
