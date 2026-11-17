@@ -60,3 +60,12 @@ onAuthStateChanged(auth, async (user) => {
         contenedorLista.innerHTML = "<p>Error al cargar la biblioteca.</p>";
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const temaGuardado = localStorage.getItem("amijuegos_tema");
+    const fuenteGuardada = localStorage.getItem("amijuegos_fuente");
+
+    if (temaGuardado === "light") document.body.classList.add("tema-claro");
+    if (fuenteGuardada === "small") document.body.classList.add("fuente-pequena");
+    if (fuenteGuardada === "large") document.body.classList.add("fuente-grande");
+});
