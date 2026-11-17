@@ -262,3 +262,11 @@ window.comprarJuegoActual = async function(nombre, descripcion, imagen, precio) 
         alert("Hubo un error al guardar el juego en tu biblioteca.");
     }
 };
+document.addEventListener("DOMContentLoaded", () => {
+    const temaGuardado = localStorage.getItem("amijuegos_tema");
+    const fuenteGuardada = localStorage.getItem("amijuegos_fuente");
+
+    if (temaGuardado === "light") document.body.classList.add("tema-claro");
+    if (fuenteGuardada === "small") document.body.classList.add("fuente-pequena");
+    if (fuenteGuardada === "large") document.body.classList.add("fuente-grande");
+});
