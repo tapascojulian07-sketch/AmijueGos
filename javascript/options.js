@@ -5,10 +5,11 @@ import {
     updateProfile, 
     signOut 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Referencias a los elementos del DOM
+    console.log("DOM cargado correctamente en options.js");
+
     const usernameInput = document.getElementById("username-input");
     const passwordInput = document.getElementById("cambio-contraseña");
     const themeSelect = document.getElementById("theme-select");
@@ -20,115 +21,85 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentUser = null;
 
-    // 1. Verificar el estado de la sesión y cargar datos actuales
+    // 1. Verificar estado de sesión
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             currentUser = user;
-            // Si tiene un nombre guardado en Firebase Auth, lo mostramos en el input
+            console.log("Usuario autenticado detectado:", user.email);
             if (user.displayName) {
                 usernameInput.value = user.displayName;
             }
-
-            // Cargar preferencias guardadas en Firestore si existen
-            try {
-                const userDocRef = doc(db, "usuarios", user.uid);
-                const userSnapshot = await getDoc(userDocRef);
-                if (userSnapshot.exists()) {
-                    const data = userSnapshot.data();
-                    if (data.tema) themeSelect.value = data.tema;
-                    if (data.fontSize) fontSizeSelect.value = data.fontSize;
-                }
-            } catch (e) {
-                console.error("Error cargando preferencias de Firestore:", e);
-            }
         } else {
-            // Si no hay sesión, redirigir al index
+            console.log("No hay usuario autenticado. Redirigiendo...");
             window.location.href = "../index.html";
         }
     });
 
-    // 2. Guardar cambios de cuenta (Nombre de usuario y Contraseña)
+    // 2. Guardar cuenta
     if (saveAccountBtn) {
         saveAccountBtn.addEventListener("click", async () => {
-            if (!currentUser) return;
+            console.log("Botón 'Guardar cambios' de cuenta presionado");
+            if (!currentUser) {
+                alert("Error: No hay un usuario activo detectado.");
+                return;
+            }
 
             try {
                 const nuevoNombre = usernameInput.value.trim();
                 const nuevaClave = passwordInput.value.trim();
 
-                // Actualizar nombre de usuario si cambió
-                if (nuevoNombre && nuevoNombre !== currentUser.displayName) {
+                if (nuevoNombre) {
                     await updateProfile(currentUser, { displayName: nuevoNombre });
-                    
-                    // Opcional: Actualizar también en Firestore si guardas una colección "usuarios"
-                    const userDocRef = doc(db, "usuarios", currentUser.uid);
-                    await setDoc(userDocRef, { nombre: nuevoNombre }, { merge: true });
+                    console.log("Nombre actualizado en Auth:", nuevoNombre);
                 }
 
-                // Actualizar contraseña si el usuario escribió una nueva
                 if (nuevaClave) {
                     if (nuevaClave.length < 6) {
                         alert("La contraseña debe tener al menos 6 caracteres.");
                         return;
                     }
                     await updatePassword(currentUser, nuevaClave);
+                    console.log("Contraseña actualizada en Auth");
                 }
 
-                alert("¡Datos de la cuenta actualizados correctamente en Firebase!");
-                passwordInput.value = ""; // Limpiar campo de contraseña por seguridad
+                alert("¡Datos actualizados correctamente!");
+                passwordInput.value = "";
             } catch (error) {
-                alert("Error al actualizar la cuenta (es posible que debas volver a iniciar sesión si la sesión es muy antigua): " + error.message);
+                console.error("Error detallado al actualizar:", error);
+                alert("Error al actualizar: " + error.message);
             }
         });
     }
 
-    // 3. Guardar cambios de apariencia (Tema y Fuente)
+    // 3. Guardar apariencia
     if (saveApparenceBtn) {
         saveApparenceBtn.addEventListener("click", async () => {
-            if (!currentUser) return;
+            console.log("Botón de apariencia presionado");
+            if (!currentUser) {
+                alert("Error: No hay un usuario activo detectado.");
+                return;
+            }
 
             const temaSeleccionado = themeSelect.value;
             const fuenteSeleccionada = fontSizeSelect.value;
 
             try {
-                // Guardar preferencias en Firestore
                 const userDocRef = doc(db, "usuarios", currentUser.uid);
                 await setDoc(userDocRef, { 
                     tema: temaSeleccionado, 
                     fontSize: fuenteSeleccionada 
                 }, { merge: true });
 
-                // Aplicar cambios visuales de inmediato en la página de opciones
-                aplicarEstilos(temaSeleccionado, fuenteSeleccionada);
-
+                console.log("Apariencia guardada en Firestore");
                 alert("¡Ajustes de apariencia guardados!");
             } catch (error) {
+                console.error("Error al guardar apariencia:", error);
                 alert("Error al guardar preferencias: " + error.message);
             }
         });
     }
 
-    // Función auxiliar para aplicar estilos visuales en tiempo real
-    function aplicarEstilos(tema, fontSize) {
-        // Ejemplo básico de aplicación de clases o atributos al body
-        if (tema === "dark") {
-            document.body.style.backgroundColor = "#121212";
-            document.body.style.color = "#ffffff";
-        } else {
-            document.body.style.backgroundColor = "#f4f4f4";
-            document.body.style.color = "#333333";
-        }
-
-        if (fontSize === "small") {
-            document.body.style.fontSize = "14px";
-        } else if (fontSize === "large") {
-            document.body.style.fontSize = "18px";
-        } else {
-            document.body.style.fontSize = "16px";
-        }
-    }
-
-    // 4. Cerrar Sesión
+    // 4. Cerrar sesión
     if (btnCerrar) {
         btnCerrar.addEventListener("click", async () => {
             try {
