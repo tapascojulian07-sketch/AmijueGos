@@ -221,8 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selectTema) {
         selectTema.addEventListener("change", (e) => {
             const temaSeleccionado = e.target.value;
-            document.body.className = ""; 
-            document.body.classList.add(`theme-${temaSeleccionado}`);
+            document.body.classList.toggle("tema-claro", temaSeleccionado === "light");
         });
     }
 });
