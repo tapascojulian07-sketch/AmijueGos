@@ -125,3 +125,13 @@ window.prepararEdicion = function(id, nombre, descripcion, precio, imagen, ofert
     // Realiza un desplazamiento suave hacia la parte superior de la página para ver el formulario
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
+document.addEventListener("DOMContentLoaded", () => {
+    const temaGuardado = localStorage.getItem("amijuegos_tema");
+    const fuenteGuardada = localStorage.getItem("amijuegos_fuente");
+
+    if (temaGuardado === "light") document.body.classList.add("tema-claro");
+    if (fuenteGuardada === "small") document.body.classList.add("fuente-pequena");
+    if (fuenteGuardada === "large") document.body.classList.add("fuente-grande");
+});
+
+
